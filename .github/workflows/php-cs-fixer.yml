@@ -1,0 +1,44 @@
+name: Coding Standards
+
+on:
+  push:
+    branches:
+      - feature/*
+      - fix/*
+  pull_request:
+    branches:
+      - feature/*
+      - fix/*
+
+jobs:
+  create-php-cs-fixer-commit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.1"
+          tools: composer:v2
+
+      - name: Cache vendor
+        id: cache
+        uses: actions/cache@v1
+        with:
+          path: ./vendor
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
+      - name: Composer install
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: composer install
+
+      - name: Execute php-cs-fixer
+        run: |
+          ./vendor/bin/php-cs-fixer fix --using-cache=no
+
+      - name: Commit & Push
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Apply php-cs-fixer changes
