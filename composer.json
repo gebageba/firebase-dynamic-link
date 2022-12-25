@@ -1,0 +1,40 @@
+{
+    "name": "gebageba/firebase-dynamic-link",
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.13",
+        "phpunit/phpunit": "^9",
+        "mockery/mockery": "^1.5"
+    },
+    "require": {
+        "php": "^8.1",
+        "guzzlehttp/guzzle": "^7.5"
+    },
+    "description": "Generate Dynamic Link for php",
+    "license": [
+        "MIT"
+    ],
+    "authors": [
+        {
+            "name": "Gebageba",
+            "email": "kanae.nagai@futurize.jp",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Gebageba\\FirebaseDynamicLink\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Gebageba\\FirebaseDynamicLink\\Test\\": "tests/"
+        }
+    },
+    "keywords": [
+        "dynamic-link",
+        "api"
+    ],
+    "scripts": {
+        "test": "phpunit tests"
+    }
+}
