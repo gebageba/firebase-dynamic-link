@@ -7,18 +7,6 @@ use Psr\Http\Message\ResponseInterface;
 
 final class DynamicLinksClient implements DynamicLinksClientInterface
 {
-//    private string $endpoint;
-//    private string $domainUriPrefix;
-//    private string $androidPackageName;
-//    private string $iosBundleId;
-//    private string $iosAppStoreId;
-
-//        $this->endpoint = config('services.firebase.dynamic_links_api').config('services.firebase.api_key');
-//        $this->domainUriPrefix = config('services.firebase.domain_uri_prefix');
-//        $this->androidPackageName = config('services.firebase.android_package_name');
-//        $this->iosBundleId = config('services.firebase.ios_bundle_id');
-//        $this->iosAppStoreId = config('services.firebase.ios_app_store_id');
-
     public function __construct(
         private readonly string $endpoint,
         private readonly string $domainUriPrefix,
@@ -33,10 +21,17 @@ final class DynamicLinksClient implements DynamicLinksClientInterface
     {
         $httpClient = new Client();
 
-        return $httpClient->request('POST', $this->endpoint, $this->params($urlParameter));
+        return $httpClient->request('POST', $this->endpoint, $this->params($urlParameter, 'SHORT'));
     }
 
-    private function params(string $urlParameter): array
+    public function getUnguessableLink(string $urlParameter): ResponseInterface
+    {
+        $httpClient = new Client();
+
+        return $httpClient->request('POST', $this->endpoint, $this->params($urlParameter, 'UNGUESSABLE'));
+    }
+
+    private function params(string $urlParameter, $option): array
     {
         return [
             'json' => [
@@ -52,9 +47,14 @@ final class DynamicLinksClient implements DynamicLinksClientInterface
                     ],
                 ],
                 'suffix' => [
-                    'option' => 'SHORT',
+                    'option' => $option,
                 ],
             ],
         ];
+    }
+
+    private function androidMinPackageVersionCode(string $version)
+    {
+
     }
 }

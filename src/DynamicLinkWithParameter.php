@@ -7,7 +7,6 @@ final class DynamicLinkWithParameter implements DynamicLinkInterface
 {
     private string $link;
 
-//$this->baseLink = config('services.firebase.base_link');
     private function __construct(
         private readonly array $data,
         private readonly string $baseLink
@@ -30,7 +29,8 @@ final class DynamicLinkWithParameter implements DynamicLinkInterface
 
     private function generateLink(): void
     {
-        $query = (new RequestBodyFlattener($this->data))->value();
-        $this->link = $this->baseLink.'?'.$query;
+        $additionalQuery = http_build_query($this->data); //必要か？？
+
+        $this->link = $this->baseLink.'&'.$additionalQuery;
     }
 }
