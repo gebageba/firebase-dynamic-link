@@ -65,8 +65,11 @@ class DynamicLink implements DynamicLinkInterface
      * @return static
      * @throws GuzzleException
      */
-    public static function generateShortDynamicLink(string $dynamicLinkApi, string $firebaseApiKey, DynamicLinkParameter $dynamicLinkParameter): self
-    {
+    public static function generateShortDynamicLink(
+        string $dynamicLinkApi,
+        string $firebaseApiKey,
+        DynamicLinkParameter $dynamicLinkParameter
+    ): self {
         $dynamicLink = new self($dynamicLinkApi, $firebaseApiKey, $dynamicLinkParameter);
         $dynamicLink->generateLink(Suffix::SHORT);
         return $dynamicLink;
