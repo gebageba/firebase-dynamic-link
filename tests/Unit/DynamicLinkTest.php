@@ -18,6 +18,22 @@ use PHPUnit\Framework\TestCase;
 
 final class DynamicLinkTest extends TestCase
 {
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $client = Mockery::mock('overload:GuzzleHttp\Client');
+        $client->shouldReceive('request')
+            ->once()
+            ->andReturn(
+                new Response(
+                    200,
+                    ['Content-Type' => 'application/json'],
+                    '{"shortLink": "https://sample.com/SAMP"}'
+                )
+            );
+    }
+
     /**
      * DynamicLinkのテスト
      */
@@ -54,17 +70,6 @@ final class DynamicLinkTest extends TestCase
             ->withoutAppPreviewPage();
 
         $firebaseApiKey = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
-
-        $client = Mockery::mock('overload:GuzzleHttp\Client');
-        $client->shouldReceive('request')
-                ->once()
-                ->andReturn(
-                    new Response(
-                        200,
-                        ['Content-Type' => 'application/json'],
-                        '{"shortLink": "https://sample.com/SAMP"}'
-                    )
-                );
 
         $shortLink = DynamicLink::generateUnguessableDynamicLink($firebaseApiKey, $dynamicLink);
         $this->assertSame('https://sample.com/SAMP', $shortLink->getShortLink());
