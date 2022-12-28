@@ -3,19 +3,26 @@
 
 namespace Gebageba\FirebaseDynamicLink;
 
+use GuzzleHttp\Exception\GuzzleException;
+
 class DynamicLink implements DynamicLinkInterface
 {
+    private string $endpoint;
     private array $response;
 
     /**
-     * @param string $endpoint
+     * @param string $dynamicLinkApi
+     * @param string $firebaseApiKey
      * @param DynamicLinkParameter $dynamicLinkParameter
      */
     private function __construct(
-        private readonly string               $endpoint,
+        string                                $dynamicLinkApi,
+        string                                $firebaseApiKey,
         private readonly DynamicLinkParameter $dynamicLinkParameter,
     )
     {
+        $this->endpoint = $dynamicLinkApi.'?key='.$firebaseApiKey;
+
     }
 
     /**
@@ -35,25 +42,27 @@ class DynamicLink implements DynamicLinkInterface
     }
 
     /**
-     * @param string $endpoint
+     * @param string $dynamicLinkApi
+     * @param string $firebaseApiKey
      * @param DynamicLinkParameter $dynamicLinkParameter
      * @return static
      */
-    public static function generateDynamicLink(string $endpoint, DynamicLinkParameter $dynamicLinkParameter): self
+    public static function generateUnguessableDynamicLink(string $dynamicLinkApi, string $firebaseApiKey, DynamicLinkParameter $dynamicLinkParameter): self
     {
-        $dynamicLink = new self($endpoint, $dynamicLinkParameter);
+        $dynamicLink = new self($dynamicLinkApi, $firebaseApiKey, $dynamicLinkParameter);
         $dynamicLink->generateLink(Suffix::UNGUESSABLE);
         return $dynamicLink;
     }
 
     /**
-     * @param string $endpoint
+     * @param string $dynamicLinkApi
+     * @param string $firebaseApiKey
      * @param DynamicLinkParameter $dynamicLinkParameter
      * @return static
      */
-    public static function generateShortDynamicLink(string $endpoint, DynamicLinkParameter $dynamicLinkParameter): self
+    public static function generateShortDynamicLink(string $dynamicLinkApi, string $firebaseApiKey, DynamicLinkParameter $dynamicLinkParameter): self
     {
-        $dynamicLink = new self($endpoint, $dynamicLinkParameter);
+        $dynamicLink = new self($dynamicLinkApi, $firebaseApiKey, $dynamicLinkParameter);
         $dynamicLink->generateLink(Suffix::SHORT);
         return $dynamicLink;
     }
@@ -61,6 +70,7 @@ class DynamicLink implements DynamicLinkInterface
     /**
      * @param string $option
      * @return void
+     * @throws GuzzleException
      */
     private function generateLink(string $option): void
     {
