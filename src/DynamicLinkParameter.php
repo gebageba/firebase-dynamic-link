@@ -2,6 +2,8 @@
 
 namespace Gebageba\FirebaseDynamicLink;
 
+use Gebageba\FirebaseDynamicLink\Exception\InvalidUriException;
+
 /**
  * @see https://firebase.google.com/docs/reference/dynamic-links/link-shortener
  */
@@ -13,17 +15,20 @@ class DynamicLinkParameter extends BaseBuilder implements DynamicLinkParameterIn
      */
     protected function __construct(string $domainUriPrefix, string $link)
     {
+        $this->validate($domainUriPrefix);
+        $this->validate($link);
+
         parent::__construct(compact('link', 'domainUriPrefix'));
     }
 
     /**
-     * @param string $domain
+     * @param string $domainUriPrefix
      * @param string $link
      * @return static
      */
-    public static function for(string $domain, string $link): self
+    public static function for(string $domainUriPrefix, string $link): self
     {
-        return new self($domain, $link);
+        return new self($domainUriPrefix, $link);
     }
 
     /**
@@ -53,5 +58,17 @@ class DynamicLinkParameter extends BaseBuilder implements DynamicLinkParameterIn
     public function withIOS(IOSInfo $info): self
     {
         return $this->merge($info);
+    }
+
+    public function getData(): array
+    {
+        return parent::getData();
+    }
+
+    private function validate(string $uri): void
+    {
+        if (! preg_match('/^(http|https):\\/\\/[a-z0-9_]+([\\-\\.]{1}[a-z_0-9]+)*\\.[_a-z]{2,5}' . '((:[0-9]{1,5})?\\/.*)?$/i', $uri)) {
+            throw new InvalidUriException('uriを指定してください');
+        }
     }
 }

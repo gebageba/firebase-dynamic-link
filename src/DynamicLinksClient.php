@@ -2,11 +2,12 @@
 
 namespace Gebageba\FirebaseDynamicLink;
 
+use Gebageba\FirebaseDynamicLink\Exception\GuzzleException;
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Exception\ClientException;
 use Psr\Http\Message\ResponseInterface;
 
-final class DynamicLinksClient extends BaseBuilder implements DynamicLinksClientInterface
+final class DynamicLinksClient implements DynamicLinksClientInterface
 {
     private Client $httpClient;
 
@@ -24,12 +25,16 @@ final class DynamicLinksClient extends BaseBuilder implements DynamicLinksClient
     /**
      * @param string $option
      * @return ResponseInterface
-     * @throws GuzzleException
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function getResponse(
         string $option
     ): ResponseInterface {
-        return $this->httpClient->request('POST', $this->endpoint, $this->buildParameter($option));
+        try {
+            return $this->httpClient->request('POST', $this->endpoint, $this->buildParameter($option));
+        } catch (ClientException $exception) {
+            throw new GuzzleException($exception->getMessage(), $exception->getCode());
+        }
     }
 
     /**

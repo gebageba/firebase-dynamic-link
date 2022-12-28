@@ -8,7 +8,7 @@ interface DynamicLinkInterface
 
     public function getShortLink(): string;
 
-    public static function generateUnguessableDynamicLink(string $dynamicLinkApi, string $firebaseApiKey, DynamicLinkParameter $dynamicLinkParameter): self;
+    public static function generateUnguessableDynamicLink(string $firebaseApiKey, DynamicLinkParameter $dynamicLinkParameter, string $dynamicLinkApi): self;
 
     public static function generateShortDynamicLink(string $dynamicLinkApi, string $firebaseApiKey, DynamicLinkParameter $dynamicLinkParameter): self;
 }

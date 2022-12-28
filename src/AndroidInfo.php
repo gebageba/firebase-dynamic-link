@@ -23,10 +23,10 @@ class AndroidInfo extends SimpleBuilder
     /**
      * The versionCode of the minimum version of your app that can open the link.
      * If the installed app is an older version, the user is taken to the Play Store to upgrade the app.
-     * @param int $versionCode
+     * @param string $versionCode
      * @return $this
      */
-    public function withMinimumVersionCode(int $versionCode): self
+    public function withMinimumVersionCode(string $versionCode): self
     {
         return $this->with('androidMinPackageVersionCode', $versionCode);
     }

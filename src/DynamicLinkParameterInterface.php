@@ -4,7 +4,7 @@ namespace Gebageba\FirebaseDynamicLink;
 
 interface DynamicLinkParameterInterface
 {
-    public static function for(string $domain, string $link): self;
+    public static function for(string $domainUriPrefix, string $link): self;
 
     public function withoutAppPreviewPage(): self;
 

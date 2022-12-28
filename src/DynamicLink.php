@@ -22,7 +22,6 @@ class DynamicLink implements DynamicLinkInterface
     )
     {
         $this->endpoint = $dynamicLinkApi.'?key='.$firebaseApiKey;
-
     }
 
     /**
@@ -42,12 +41,13 @@ class DynamicLink implements DynamicLinkInterface
     }
 
     /**
-     * @param string $dynamicLinkApi
      * @param string $firebaseApiKey
      * @param DynamicLinkParameter $dynamicLinkParameter
+     * @param string $dynamicLinkApi
      * @return static
+     * @throws GuzzleException
      */
-    public static function generateUnguessableDynamicLink(string $dynamicLinkApi, string $firebaseApiKey, DynamicLinkParameter $dynamicLinkParameter): self
+    public static function generateUnguessableDynamicLink(string $firebaseApiKey, DynamicLinkParameter $dynamicLinkParameter, string $dynamicLinkApi = 'https://firebasedynamiclinks.googleapis.com/v1/shortLinks'): self
     {
         $dynamicLink = new self($dynamicLinkApi, $firebaseApiKey, $dynamicLinkParameter);
         $dynamicLink->generateLink(Suffix::UNGUESSABLE);
@@ -59,6 +59,7 @@ class DynamicLink implements DynamicLinkInterface
      * @param string $firebaseApiKey
      * @param DynamicLinkParameter $dynamicLinkParameter
      * @return static
+     * @throws GuzzleException
      */
     public static function generateShortDynamicLink(string $dynamicLinkApi, string $firebaseApiKey, DynamicLinkParameter $dynamicLinkParameter): self
     {
