@@ -21,8 +21,8 @@ class DynamicLink implements DynamicLinkInterface
      * @param DynamicLinkParameter $dynamicLinkParameter
      */
     private function __construct(
-        string                                $dynamicLinkApi,
-        string                                $firebaseApiKey,
+        string $dynamicLinkApi,
+        string $firebaseApiKey,
         private readonly DynamicLinkParameter $dynamicLinkParameter,
     ) {
         $this->endpoint = $dynamicLinkApi.'?key='.$firebaseApiKey;
