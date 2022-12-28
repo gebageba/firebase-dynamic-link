@@ -1,5 +1,7 @@
 # firebase-dynamic-link
 
+
+## Installation
 `composer.json` に
 
 ```
@@ -19,7 +21,8 @@ $ composer require gebageba/firebase-dynamic-link
 
 でインストールする。
 
-# Installation
+
+# Usage
 ```php
 $domainUrlPrefix = 'https://sample.page.link'; //DynamicLinkになるUri
 $link = 'https://sample.jp/app/page/1'; //遷移先
