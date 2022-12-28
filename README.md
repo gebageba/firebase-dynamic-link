@@ -22,7 +22,7 @@ $ composer require gebageba/firebase-dynamic-link
 でインストールする。
 
 
-# Usage
+## Usage
 ```php
 $domainUrlPrefix = 'https://sample.page.link'; //DynamicLinkになるUri
 $link = 'https://sample.jp/app/page/1'; //遷移先
