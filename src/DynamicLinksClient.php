@@ -3,58 +3,43 @@
 namespace Gebageba\FirebaseDynamicLink;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use Psr\Http\Message\ResponseInterface;
 
-final class DynamicLinksClient implements DynamicLinksClientInterface
+final class DynamicLinksClient extends BaseBuilder implements DynamicLinksClientInterface
 {
+    private Client $httpClient;
+
+    /**
+     * @param string $endpoint
+     * @param DynamicLinkParameter $dynamicLinkParameter
+     */
     public function __construct(
-        private readonly string $endpoint,
-        private readonly string $domainUriPrefix,
-        private readonly string $androidPackageName,
-        private readonly string $iosBundleId,
-        private readonly string $iosAppStoreId
-    )
-    {
+        private readonly string               $endpoint,
+        private readonly DynamicLinkParameter $dynamicLinkParameter
+    ) {
+        $this->httpClient = new Client();
     }
 
-    public function getShortLink(string $urlParameter): ResponseInterface
-    {
-        $httpClient = new Client();
-
-        return $httpClient->request('POST', $this->endpoint, $this->params($urlParameter, 'SHORT'));
+    /**
+     * @param string $option
+     * @return ResponseInterface
+     * @throws GuzzleException
+     */
+    public function getResponse(
+        string $option
+    ): ResponseInterface {
+        return $this->httpClient->request('POST', $this->endpoint, $this->buildParameter($option));
     }
 
-    public function getUnguessableLink(string $urlParameter): ResponseInterface
-    {
-        $httpClient = new Client();
-
-        return $httpClient->request('POST', $this->endpoint, $this->params($urlParameter, 'UNGUESSABLE'));
-    }
-
-    private function params(string $urlParameter, $option): array
+    /**
+     * @param string $option
+     * @return array
+     */
+    private function buildParameter(string $option): array
     {
         return [
-            'json' => [
-                'dynamicLinkInfo' => [
-                    'domainUriPrefix' => $this->domainUriPrefix,
-                    'link' => $urlParameter,
-                    'androidInfo' => [
-                        'androidPackageName' => $this->androidPackageName,
-                    ],
-                    'iosInfo' => [
-                        'iosBundleId' => $this->iosBundleId,
-                        'iosAppStoreId' => $this->iosAppStoreId,
-                    ],
-                ],
-                'suffix' => [
-                    'option' => $option,
-                ],
-            ],
+            'json' => array_merge(['dynamicLinkInfo' => $this->dynamicLinkParameter->getData()], ['suffix' => ['option' => $option]])
         ];
-    }
-
-    private function androidMinPackageVersionCode(string $version)
-    {
-
     }
 }
