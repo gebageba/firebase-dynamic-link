@@ -72,6 +72,6 @@ final class DynamicLinkTest extends TestCase
         $firebaseApiKey = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
 
         $shortLink = DynamicLink::generateUnguessableDynamicLink($firebaseApiKey, $dynamicLink);
-        $this->assertSame('https://sample.com/SAMP', $shortLink->getShortLink());
+        $this->assertSame('https://sample.com/SAMP', $shortLink->getLink());
     }
 }

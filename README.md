@@ -63,7 +63,10 @@ $dynamicLink = DynamicLinkParameter::for($domainUrlPrefix, $link)
 $firebaseApiKey = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
 $dynamicLinkApi = 'https://firebasedynamiclinks'; //(デフォルトはhttps://firebasedynamiclinks.googleapis.com/v1/shortLinks)
 
-$dynamicLink = DynamicLink::generateUnguessableDynamicLink($firebaseApiKey, $dynamicLink, $dynamicLinkApi);
-$dynamicLink->getShortLink(); 
+$dynamicLink = DynamicLink::generateUnguessableDynamicLink($firebaseApiKey, $dynamicLink, $dynamicLinkApi); //https://sample.page.link/LELFkXh7sXAM6eT48
+or
+$dynamicLink = DynamicLink::generateShortDynamicLink($firebaseApiKey, $dynamicLink, $dynamicLinkApi); //https://coetto.page.link/LELF
+
+$dynamicLink->getLink(); 
 or
 $dynamicLink->value();

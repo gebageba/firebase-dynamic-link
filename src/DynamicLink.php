@@ -39,7 +39,7 @@ class DynamicLink implements DynamicLinkInterface
     /**
      * @return string
      */
-    public function getShortLink(): string
+    public function getLink(): string
     {
         return $this->response['shortLink'];
     }
