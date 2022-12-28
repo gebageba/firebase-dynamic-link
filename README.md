@@ -24,6 +24,12 @@ $ composer require gebageba/firebase-dynamic-link
 
 ## Usage
 ```php
+
+use Gebageba\FirebaseDynamicLink\AndroidInfo;
+use Gebageba\FirebaseDynamicLink\DynamicLink;
+use Gebageba\FirebaseDynamicLink\DynamicLinkParameter;
+use Gebageba\FirebaseDynamicLink\IOSInfo;
+
 $domainUrlPrefix = 'https://sample.page.link'; //DynamicLinkになるUri
 $link = 'https://sample.jp/app/page/1'; //遷移先
 $androidVersionCode = '1.2.3';
@@ -55,7 +61,7 @@ $dynamicLink = DynamicLinkParameter::for($domainUrlPrefix, $link)
     ->withoutAppPreviewPage(); //iOSのみ。つけるとパラメーターが消えることがある。
 
 $firebaseApiKey = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
-$dynamicLinkApi = 'https://firebasedynamiclinks'(デフォルトはhttps://firebasedynamiclinks.googleapis.com/v1/shortLinks)
+$dynamicLinkApi = 'https://firebasedynamiclinks'; //(デフォルトはhttps://firebasedynamiclinks.googleapis.com/v1/shortLinks)
 
 $dynamicLink = DynamicLink::generateUnguessableDynamicLink($firebaseApiKey, $dynamicLink, $dynamicLinkApi);
 $dynamicLink->getShortLink(); 
