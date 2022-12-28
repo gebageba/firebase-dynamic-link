@@ -1,5 +1,11 @@
 <?php
 
+/*
+ * This file is part of Firebase-Dynamic-Login.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Gebageba\FirebaseDynamicLink\Test\Unit;
 
 use Gebageba\FirebaseDynamicLink\AndroidInfo;
@@ -7,8 +13,8 @@ use Gebageba\FirebaseDynamicLink\DynamicLink;
 use Gebageba\FirebaseDynamicLink\DynamicLinkParameter;
 use Gebageba\FirebaseDynamicLink\IOSInfo;
 use GuzzleHttp\Psr7\Response;
-use PHPUnit\Framework\TestCase;
 use Mockery;
+use PHPUnit\Framework\TestCase;
 
 final class DynamicLinkTest extends TestCase
 {
