@@ -73,8 +73,9 @@ class DynamicLinkParameter extends BaseBuilder implements DynamicLinkParameterIn
 
     private function validate(string $uri): void
     {
-        if (! preg_match('/^(http|https):\\/\\/[a-z0-9_]+([\\-\\.]{1}[a-z_0-9]+)*\\.[_a-z]{2,5}' . '((:[0-9]{1,5})?\\/.*)?$/i', $uri)) {
-            throw new InvalidUriException('uriを指定してください');
-        }
+        //TODO: うまくvalidationできていない
+//        if (! preg_match('/^(http|https):\\/\\/[a-z0-9_]+([\\-\\.]{1}[a-z_0-9]+)*\\.[_a-z]{2,5}' . '((:[0-9]{1,5})?\\/.*)?$/i', $uri)) {
+//            throw new InvalidUriException('uriを指定してください');
+//        }
     }
 }
